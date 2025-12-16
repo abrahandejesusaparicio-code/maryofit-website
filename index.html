@@ -1,1 +1,1040 @@
-ss
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaryOFit - Entrenadora Personal</title>
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            --color-1: #C82A81;
+            --color-2: #EEBB68;
+            --color-3: #FEFEFC;
+            --color-4: #79E7F6;
+            --color-5: #000000;
+            --color-6: #741340;
+            --tintshade-4: #043339;
+            --tintshade-8: #dc287c;
+            --tintshade-9: #cd8817;
+            --tintshade-10: #e8a435;
+            --tintshade-11: #e9e9bd;
+        }
+
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-5);
+            color: var(--color-3);
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--color-5) 0%, var(--color-6) 100%);
+            padding: 1rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(200, 42, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--color-3);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(200, 42, 129, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 2px solid var(--color-1);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--color-3);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--color-1);
+            color: var(--color-3);
+        }
+
+        .lang-btn:hover {
+            background: var(--tintshade-8);
+        }
+
+        /* Wave Animation on Navbar */
+        .wave-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-1), var(--color-2), var(--color-4));
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--color-3);
+            transition: all 0.3s ease;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-5) 0%, var(--color-6) 50%, var(--tintshade-4) 100%);
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('pics&vids/sin_excusas_ven_a_entrenar.mp4');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 1s ease forwards 0.3s;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-1), var(--color-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: var(--color-3);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-1), var(--tintshade-8));
+            color: var(--color-3);
+            box-shadow: 0 5px 20px rgba(200, 42, 129, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(200, 42, 129, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-3);
+            border: 2px solid var(--color-2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-2);
+            color: var(--color-5);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 1s ease forwards 0.5s;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(200, 42, 129, 0.3);
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .about {
+            padding: 6rem 5%;
+            background: var(--color-5);
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(121, 231, 246, 0.3);
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-2);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--color-3);
+        }
+
+        /* ==================== SERVICES SECTION ==================== */
+        .services {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--color-6) 0%, var(--color-5) 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--color-2);
+        }
+
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(200, 42, 129, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--color-1);
+            box-shadow: 0 10px 40px rgba(200, 42, 129, 0.4);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-2);
+        }
+
+        .service-card p {
+            line-height: 1.6;
+            color: var(--color-3);
+        }
+
+        /* ==================== ZUMBA VIDEO SECTION ==================== */
+        .zumba-section {
+            padding: 6rem 5%;
+            background: var(--color-5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zumba-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(234, 187, 104, 0.3);
+            margin-top: 2rem;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+        }
+
+        /* ==================== TESTIMONIALS WITH PARALLAX ==================== */
+        .testimonials {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, var(--tintshade-4) 0%, var(--color-5) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(121, 231, 246, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            transition: all 0.5s ease;
+        }
+
+        .testimonial-card p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author strong {
+            color: var(--color-2);
+            font-size: 1.1rem;
+        }
+
+        /* ==================== PROGRESS VIDEO SECTION ==================== */
+        .progress-section {
+            padding: 6rem 5%;
+            background: var(--color-5);
+        }
+
+        .progress-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .progress-video video {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(200, 42, 129, 0.3);
+        }
+
+        .progress-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-1);
+        }
+
+        .progress-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        .contact {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--color-6) 0%, var(--color-5) 100%);
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: var(--color-3);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--color-1);
+        }
+
+        .social-icon {
+            font-size: 2rem;
+            color: var(--color-1);
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            padding: 2rem 5%;
+            background: var(--color-5);
+            text-align: center;
+            border-top: 2px solid var(--color-1);
+        }
+
+        /* ==================== SCROLL ANIMATIONS ==================== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 968px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--color-5);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .hero-content,
+            .about-container,
+            .progress-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title,
+            .about-text h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <img src="pics&vids/Logo.jpg" alt="MaryOFit Logo" class="logo">
+            
+            <ul class="nav-links">
+                <li><a href="#home" data-translate="nav_home">Inicio</a></li>
+                <li><a href="#about" data-translate="nav_about">Sobre Mí</a></li>
+                <li><a href="#services" data-translate="nav_services">Servicios</a></li>
+                <li><a href="#zumba" data-translate="nav_zumba">Zumba</a></li>
+                <li><a href="#testimonials" data-translate="nav_testimonials">Testimonios</a></li>
+                <li><a href="#contact" data-translate="nav_contact">Contacto</a></li>
+                <li class="lang-switcher">
+                    <button class="lang-btn active" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                </li>
+            </ul>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="wave-line"></div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 data-translate="hero_title">Transforma Tu Cuerpo</h1>
+                <p data-translate="hero_subtitle">Entrenamiento personalizado que cambia vidas. Alcanza tus metas con dedicación y pasión.</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary" data-translate="hero_cta1">Comienza Ahora</a>
+                    <a href="#about" class="btn btn-secondary" data-translate="hero_cta2">Conoce Más</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="pics&vids/Profile_pic.jpg" alt="MaryOFit Trainer">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about">
+        <div class="about-container">
+            <div class="about-image slide-left">
+                <img src="pics&vids/Frase_motivacional.jpg" alt="Motivational Quote">
+            </div>
+            <div class="about-text slide-right">
+                <h2 data-translate="about_title">Sobre Mí</h2>
+                <p data-translate="about_p1">¡Hola! Soy Mary, entrenadora personal certificada con años de experiencia ayudando a personas a alcanzar sus objetivos de fitness.</p>
+                <p data-translate="about_p2">Mi pasión es crear programas personalizados que se adapten a tu estilo de vida, nivel de condición física y metas específicas.</p>
+                <p data-translate="about_p3">Creo en un enfoque holístico que combina entrenamiento, nutrición y mentalidad positiva para resultados duraderos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="services">
+        <h2 class="section-title fade-in" data-translate="services_title">Mis Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">💪</div>
+                <h3 data-translate="service1_title">Entrenamiento Personal</h3>
+                <p data-translate="service1_desc">Sesiones uno a uno diseñadas específicamente para tus necesidades y objetivos.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🏃</div>
+                <h3 data-translate="service2_title">Programas de Cardio</h3>
+                <p data-translate="service2_desc">Mejora tu resistencia cardiovascular con entrenamientos dinámicos y efectivos.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🥗</div>
+                <h3 data-translate="service3_title">Asesoría Nutricional</h3>
+                <p data-translate="service3_desc">Planes de alimentación personalizados para complementar tu entrenamiento.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🎯</div>
+                <h3 data-translate="service4_title">Entrenamiento Grupal</h3>
+                <p data-translate="service4_desc">Sesiones en grupo para motivación extra y resultados increíbles.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">💃</div>
+                <h3 data-translate="service5_title">Clases de Zumba</h3>
+                <p data-translate="service5_desc">Baila, quema calorías y diviértete con nuestras energéticas clases de Zumba.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🧘</div>
+                <h3 data-translate="service6_title">Flexibilidad y Movilidad</h3>
+                <p data-translate="service6_desc">Mejora tu rango de movimiento y previene lesiones con ejercicios específicos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZUMBA VIDEO SECTION -->
+    <section id="zumba" class="zumba-section">
+        <div class="zumba-container">
+            <h2 class="section-title fade-in" data-translate="zumba_title">Energía Zumba</h2>
+            <p class="fade-in" data-translate="zumba_desc">¡Únete a nuestras clases y experimenta la energía!</p>
+            <div class="video-wrapper fade-in">
+                <video controls poster="pics&vids/Profile_pic.jpg">
+                    <source src="pics&vids/video_zumba.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS WITH PARALLAX -->
+    <section id="testimonials" class="testimonials">
+        <div class="testimonials-container">
+            <h2 class="section-title" data-translate="testimonials_title">Lo Que Dicen Mis Clientes</h2>
+            
+            <div class="testimonial-card parallax-item" data-speed="0.3">
+                <p data-translate="testimonial1_text">"Mary cambió mi vida completamente. Bajé 15kg y gané confianza en mí misma. ¡Su energía es contagiosa!"</p>
+                <div class="testimonial-author">
+                    <strong data-translate="testimonial1_author">- Ana M.</strong>
+                </div>
+            </div>
+            
+            <div class="testimonial-card parallax-item" data-speed="0.5">
+                <p data-translate="testimonial2_text">"Las clases de Zumba son lo mejor de mi semana. Me divierto tanto que ni siento que estoy haciendo ejercicio."</p>
+                <div class="testimonial-author">
+                    <strong data-translate="testimonial2_author">- Carlos R.</strong>
+                </div>
+            </div>
+            
+            <div class="testimonial-card parallax-item" data-speed="0.4">
+                <p data-translate="testimonial3_text">"Profesional, dedicada y siempre motivadora. Mary me ayudó a superar mis límites y alcanzar metas que creía imposibles."</p>
+                <div class="testimonial-author">
+                    <strong data-translate="testimonial3_author">- Laura P.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESS VIDEO SECTION -->
+    <section class="progress-section">
+        <div class="progress-container">
+            <div class="progress-text slide-left">
+                <h2 data-translate="progress_title">Tu Progreso Es Mi Motivación</h2>
+                <p data-translate="progress_p1">Cada transformación comienza con un primer paso. Juntos crearemos un plan adaptado a ti.</p>
+                <p data-translate="progress_p2">Ver el progreso de mis clientes es lo que me inspira cada día a dar lo mejor de mí.</p>
+                <a href="#contact" class="btn btn-primary" data-translate="progress_cta">¡Empieza Tu Transformación!</a>
+            </div>
+            <div class="progress-video slide-right">
+                <video controls poster="pics&vids/Profile_pic.jpg">
+                    <source src="pics&vids/progress_vid.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <h2 class="section-title fade-in" data-translate="contact_title">Contáctame</h2>
+            <p class="fade-in" data-translate="contact_subtitle">¿Listo para comenzar tu transformación? ¡Hablemos!</p>
+            
+            <div class="contact-info">
+                <div class="contact-item fade-in">
+                    <span class="social-icon">📱</span>
+                    <a href="tel:65357644">65357644</a>
+                </div>
+                <div class="contact-item fade-in">
+                    <span class="social-icon">📷</span>
+                    <a href="https://www.instagram.com/maryofit/" target="_blank">@maryofit</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 MaryOFit. <span data-translate="footer_rights">Todos los derechos reservados.</span></p>
+    </footer>
+
+    <script>
+        // ==================== TRANSLATIONS ====================
+        const translations = {
+            es: {
+                nav_home: "Inicio",
+                nav_about: "Sobre Mí",
+                nav_services: "Servicios",
+                nav_zumba: "Zumba",
+                nav_testimonials: "Testimonios",
+                nav_contact: "Contacto",
+                hero_title: "Transforma Tu Cuerpo",
+                hero_subtitle: "Entrenamiento personalizado que cambia vidas. Alcanza tus metas con dedicación y pasión.",
+                hero_cta1: "Comienza Ahora",
+                hero_cta2: "Conoce Más",
+                about_title: "Sobre Mí",
+                about_p1: "¡Hola! Soy Mary, entrenadora personal certificada con años de experiencia ayudando a personas a alcanzar sus objetivos de fitness.",
+                about_p2: "Mi pasión es crear programas personalizados que se adapten a tu estilo de vida, nivel de condición física y metas específicas.",
+                about_p3: "Creo en un enfoque holístico que combina entrenamiento, nutrición y mentalidad positiva para resultados duraderos.",
+                services_title: "Mis Servicios",
+                service1_title: "Entrenamiento Personal",
+                service1_desc: "Sesiones uno a uno diseñadas específicamente para tus necesidades y objetivos.",
+                service2_title: "Programas de Cardio",
+                service2_desc: "Mejora tu resistencia cardiovascular con entrenamientos dinámicos y efectivos.",
+                service3_title: "Asesoría Nutricional",
+                service3_desc: "Planes de alimentación personalizados para complementar tu entrenamiento.",
+                service4_title: "Entrenamiento Grupal",
+                service4_desc: "Sesiones en grupo para motivación extra y resultados increíbles.",
+                service5_title: "Clases de Zumba",
+                service5_desc: "Baila, quema calorías y diviértete con nuestras energéticas clases de Zumba.",
+                service6_title: "Flexibilidad y Movilidad",
+                service6_desc: "Mejora tu rango de movimiento y previene lesiones con ejercicios específicos.",
+                zumba_title: "Energía Zumba",
+                zumba_desc: "¡Únete a nuestras clases y experimenta la energía!",
+                testimonials_title: "Lo Que Dicen Mis Clientes",
+                testimonial1_text: "\"Mary cambió mi vida completamente. Bajé 15kg y gané confianza en mí misma. ¡Su energía es contagiosa!\"",
+                testimonial1_author: "- Ana M.",
+                testimonial2_text: "\"Las clases de Zumba son lo mejor de mi semana. Me divierto tanto que ni siento que estoy haciendo ejercicio.\"",
+                testimonial2_author: "- Carlos R.",
+                testimonial3_text: "\"Profesional, dedicada y siempre motivadora. Mary me ayudó a superar mis límites y alcanzar metas que creía imposibles.\"",
+                testimonial3_author: "- Laura P.",
+                progress_title: "Tu Progreso Es Mi Motivación",
+                progress_p1: "Cada transformación comienza con un primer paso. Juntos crearemos un plan adaptado a ti.",
+                progress_p2: "Ver el progreso de mis clientes es lo que me inspira cada día a dar lo mejor de mí.",
+                progress_cta: "¡Empieza Tu Transformación!",
+                contact_title: "Contáctame",
+                contact_subtitle: "¿Listo para comenzar tu transformación? ¡Hablemos!",
+                footer_rights: "Todos los derechos reservados."
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About Me",
+                nav_services: "Services",
+                nav_zumba: "Zumba",
+                nav_testimonials: "Testimonials",
+                nav_contact: "Contact",
+                hero_title: "Transform Your Body",
+                hero_subtitle: "Personalized training that changes lives. Reach your goals with dedication and passion.",
+                hero_cta1: "Start Now",
+                hero_cta2: "Learn More",
+                about_title: "About Me",
+                about_p1: "Hi! I'm Mary, a certified personal trainer with years of experience helping people achieve their fitness goals.",
+                about_p2: "My passion is creating personalized programs that fit your lifestyle, fitness level, and specific goals.",
+                about_p3: "I believe in a holistic approach that combines training, nutrition, and positive mindset for lasting results.",
+                services_title: "My Services",
+                service1_title: "Personal Training",
+                service1_desc: "One-on-one sessions designed specifically for your needs and goals.",
+                service2_title: "Cardio Programs",
+                service2_desc: "Improve your cardiovascular endurance with dynamic and effective workouts.",
+                service3_title: "Nutritional Counseling",
+                service3_desc: "Personalized meal plans to complement your training.",
+                service4_title: "Group Training",
+                service4_desc: "Group sessions for extra motivation and incredible results.",
+                service5_title: "Zumba Classes",
+                service5_desc: "Dance, burn calories, and have fun with our energetic Zumba classes.",
+                service6_title: "Flexibility and Mobility",
+                service6_desc: "Improve your range of motion and prevent injuries with specific exercises.",
+                zumba_title: "Zumba Energy",
+                zumba_desc: "Join our classes and experience the energy!",
+                testimonials_title: "What My Clients Say",
+                testimonial1_text: "\"Mary completely changed my life. I lost 15kg and gained confidence in myself. Her energy is contagious!\"",
+                testimonial1_author: "- Ana M.",
+                testimonial2_text: "\"Zumba classes are the best part of my week. I have so much fun that I don't even feel like I'm exercising.\"",
+                testimonial2_author: "- Carlos R.",
+                testimonial3_text: "\"Professional, dedicated, and always motivating. Mary helped me push past my limits and achieve goals I thought were impossible.\"",
+                testimonial3_author: "- Laura P.",
+                progress_title: "Your Progress Is My Motivation",
+                progress_p1: "Every transformation begins with a first step. Together we'll create a plan tailored to you.",
+                progress_p2: "Seeing my clients' progress is what inspires me every day to give my best.",
+                progress_cta: "Start Your Transformation!",
+                contact_title: "Contact Me",
+                contact_subtitle: "Ready to start your transformation? Let's talk!",
+                footer_rights: "All rights reserved."
+            },
+            fr: {
+                nav_home: "Accueil",
+                nav_about: "À Propos",
+                nav_services: "Services",
+                nav_zumba: "Zumba",
+                nav_testimonials: "Témoignages",
+                nav_contact: "Contact",
+                hero_title: "Transformez Votre Corps",
+                hero_subtitle: "Entraînement personnalisé qui change des vies. Atteignez vos objectifs avec dévouement et passion.",
+                hero_cta1: "Commencez Maintenant",
+                hero_cta2: "En Savoir Plus",
+                about_title: "À Propos de Moi",
+                about_p1: "Bonjour ! Je suis Mary, entraîneuse personnelle certifiée avec des années d'expérience aidant les gens à atteindre leurs objectifs de fitness.",
+                about_p2: "Ma passion est de créer des programmes personnalisés qui s'adaptent à votre style de vie, niveau de condition physique et objectifs spécifiques.",
+                about_p3: "Je crois en une approche holistique qui combine entraînement, nutrition et mentalité positive pour des résultats durables.",
+                services_title: "Mes Services",
+                service1_title: "Entraînement Personnel",
+                service1_desc: "Séances individuelles conçues spécifiquement pour vos besoins et objectifs.",
+                service2_title: "Programmes Cardio",
+                service2_desc: "Améliorez votre endurance cardiovasculaire avec des entraînements dynamiques et efficaces.",
+                service3_title: "Conseils Nutritionnels",
+                service3_desc: "Plans alimentaires personnalisés pour compléter votre entraînement.",
+                service4_title: "Entraînement en Groupe",
+                service4_desc: "Séances en groupe pour une motivation supplémentaire et des résultats incroyables.",
+                service5_title: "Cours de Zumba",
+                service5_desc: "Dansez, brûlez des calories et amusez-vous avec nos cours de Zumba énergiques.",
+                service6_title: "Flexibilité et Mobilité",
+                service6_desc: "Améliorez votre amplitude de mouvement et prévenez les blessures avec des exercices spécifiques.",
+                zumba_title: "Énergie Zumba",
+                zumba_desc: "Rejoignez nos cours et vivez l'énergie !",
+                testimonials_title: "Ce Que Disent Mes Clients",
+                testimonial1_text: "\"Mary a complètement changé ma vie. J'ai perdu 15kg et gagné confiance en moi. Son énergie est contagieuse !\"",
+                testimonial1_author: "- Ana M.",
+                testimonial2_text: "\"Les cours de Zumba sont le meilleur moment de ma semaine. Je m'amuse tellement que je ne sens même pas que je fais de l'exercice.\"",
+                testimonial2_author: "- Carlos R.",
+                testimonial3_text: "\"Professionnelle, dévouée et toujours motivante. Mary m'a aidé à dépasser mes limites et à atteindre des objectifs que je croyais impossibles.\"",
+                testimonial3_author: "- Laura P.",
+                progress_title: "Votre Progrès Est Ma Motivation",
+                progress_p1: "Chaque transformation commence par un premier pas. Ensemble, nous créerons un plan adapté à vous.",
+                progress_p2: "Voir les progrès de mes clients est ce qui m'inspire chaque jour à donner le meilleur de moi-même.",
+                progress_cta: "Commencez Votre Transformation !",
+                contact_title: "Contactez-Moi",
+                contact_subtitle: "Prêt à commencer votre transformation ? Parlons-en !",
+                footer_rights: "Tous droits réservés."
+            }
+        };
+
+        // ==================== LANGUAGE SWITCHER ====================
+        let currentLang = 'es';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Update all translated elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Language button listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.getAttribute('data-lang'));
+            });
+        });
+
+        // ==================== NAVBAR SCROLL EFFECT ====================
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ==================== MOBILE MENU TOGGLE ====================
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ==================== SCROLL ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-left, .slide-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==================== PARALLAX EFFECT FOR TESTIMONIALS ====================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxItems = document.querySelectorAll('.parallax-item');
+            
+            parallaxItems.forEach(item => {
+                const speed = item.getAttribute('data-speed') || 0.5;
+                const yPos = -(scrolled * speed);
+                item.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        // ==================== SMOOTH SCROLL FOR ANCHOR LINKS ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // Account for fixed navbar
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
